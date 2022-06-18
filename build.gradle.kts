@@ -19,7 +19,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    val okV = "4.9.3"
+    val okV = "4.10.0"
     implementation("com.squareup.okhttp3:logging-interceptor:$okV")
     implementation("com.squareup.okhttp3:okhttp:$okV")
     implementation("com.squareup.okhttp:okhttp-ws:2.7.5")
@@ -27,13 +27,13 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:1.7.36")
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
 
-    implementation("com.google.dagger:dagger:2.41")
-    kapt("com.google.dagger:dagger-compiler:2.41")
+    implementation("com.google.dagger:dagger:2.42")
+    kapt("com.google.dagger:dagger-compiler:2.42")
 
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("commons-codec:commons-codec:1.15")
 
-    implementation("com.github.vladimir-bukhtoyarov:bucket4j-core:7.3.0")
+    implementation("com.github.vladimir-bukhtoyarov:bucket4j-core:7.5.0")
 
 }
 
@@ -72,7 +72,8 @@ tasks {
                 "compileKotlin",
                 "processResources"
             )
-        ) // We need this for Gradle optimization to work
+        )
+        // We need this for Gradle optimization to work
         archiveClassifier.set("standalone") // Naming the jar
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         manifest { attributes(mapOf("Main-Class" to application.mainClass)) } // Provided we set it up in the application plugin configuration
