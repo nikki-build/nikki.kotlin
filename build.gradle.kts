@@ -24,7 +24,6 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:$okV")
     implementation("com.squareup.okhttp:okhttp-ws:2.7.5")
 
-    implementation("org.slf4j:slf4j-simple:1.7.36")
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
 
     implementation("com.google.code.gson:gson:2.9.0")
@@ -57,6 +56,28 @@ publishing {
             artifactId = "kotlin"
             version = "1.0"
             from(components["java"])
+            pom {
+                name.set("Nikki Kotlin")
+                description.set("A websocket service from nikkibuild")
+                url.set("https://github.com/nikki-build/nikki.kotlin")
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("nikkibuild")
+                        name.set("NikkiBuild")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:https://github.com/nikki-build/nikki.kotlin.git")
+                    developerConnection.set("scm:git:ssh://git@github.com:nikki-build/nikki.kotlin.git")
+                    url.set("https://github.com/nikki-build/nikki.kotlin")
+                }
+            }
         }
     }
 }

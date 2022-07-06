@@ -17,11 +17,11 @@ class SocketManager constructor(
     throttleDurationMinutes: Long,
     delegate: SocketDelegate
 ) {
-    private val serviceConfig = ServiceConfig(tokenPath, defPath)
+    private val serviceConfig = ServiceConfig(configPath = defPath, tokenPath = tokenPath)
     private val eventListener = SocketEventListener(delegate)
     private val okHttp = serviceConfig.okHttp()
-    private val properties = serviceConfig.serviceDef()
-    private val token = serviceConfig.serviceToken()
+    val definition = serviceConfig.serviceDef()
+    val token = serviceConfig.serviceToken()
     private val throttleManager = ThrottleManager(throttleCapacity, throttleDurationMinutes)
     private var socket: WebSocket? = null
     private val transformer = Gson()
@@ -44,7 +44,7 @@ class SocketManager constructor(
     }
 
     private fun makeInfoParam(): String {
-        val info = ServiceJoinInfo(token.sessionId, token.userId, properties, token.wsAddress)
+        val info = ServiceJoinInfo(token.sessionId, token.userId, definition, token.wsAddress)
         val json = transformer.toJson(info)
         return Base64.encodeBase64URLSafeString(json.toByteArray(StandardCharsets.UTF_8))
     }

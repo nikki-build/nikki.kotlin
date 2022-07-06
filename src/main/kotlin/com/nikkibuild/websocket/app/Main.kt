@@ -1,25 +1,24 @@
 package com.nikkibuild.websocket.app
 
 import com.google.gson.Gson
-import com.nikkibuild.websocket.app.config.DaggerAppComponent
 import com.nikkibuild.websocket.app.socket.SocketDelegate
 import com.nikkibuild.websocket.app.socket.SocketManager
-import com.nikkibuild.websocket.app.util.*
+import com.nikkibuild.websocket.app.util.Anything
+import com.nikkibuild.websocket.app.util.Data
+import com.nikkibuild.websocket.app.util.Message
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.WebSocket
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.util.*
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.system.exitProcess
 
 class Main {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val app = DaggerAppComponent.create().app()
+            val app = App()
             app.startApp()
         }
     }
@@ -30,14 +29,11 @@ class Main {
     }
 }
 
-@Singleton
-class App @Inject constructor(
-    private val socketManager: SocketManager,
-) : SocketDelegate {
+class App : SocketDelegate {
     private var connected = false
+    private val socketManager = SocketManager("./serviceToken.json", "./serviceDef.json", 5, 1, this)
     fun startApp() {
         println("---------- W E B  S O C K E T ----------")
-        eventListener.delegate = this
         showMenu()
     }
 
@@ -85,9 +81,9 @@ class App @Inject constructor(
         val message = Anything(text)
         val d = Data("n", message, "d")
         return Message(
-            "t", d, "d", "msg", "ok", token.sessionId,
-            serviceDefinition.serviceId,
-            serviceDefinition.instanceId
+            "t", d, "d", "msg", "ok", socketManager.token.sessionId,
+            socketManager.definition.serviceId,
+            socketManager.definition.instanceId
         )
     }
 
