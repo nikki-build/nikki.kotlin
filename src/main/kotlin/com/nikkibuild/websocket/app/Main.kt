@@ -3,7 +3,6 @@ package com.nikkibuild.websocket.app
 import com.google.gson.Gson
 import com.nikkibuild.websocket.app.config.DaggerAppComponent
 import com.nikkibuild.websocket.app.socket.SocketDelegate
-import com.nikkibuild.websocket.app.socket.SocketEventListener
 import com.nikkibuild.websocket.app.socket.SocketManager
 import com.nikkibuild.websocket.app.util.*
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -34,9 +33,6 @@ class Main {
 @Singleton
 class App @Inject constructor(
     private val socketManager: SocketManager,
-    private val eventListener: SocketEventListener,
-    private val serviceDefinition: ServiceDefinition,
-    private val token: ServiceToken
 ) : SocketDelegate {
     private var connected = false
     fun startApp() {

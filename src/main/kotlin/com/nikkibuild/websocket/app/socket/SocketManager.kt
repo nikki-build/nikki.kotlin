@@ -1,27 +1,28 @@
 package com.nikkibuild.websocket.app.socket
 
 import com.google.gson.Gson
+import com.nikkibuild.websocket.app.config.ServiceConfig
 import com.nikkibuild.websocket.app.util.Message
-import com.nikkibuild.websocket.app.util.ServiceDefinition
 import com.nikkibuild.websocket.app.util.ServiceJoinInfo
-import com.nikkibuild.websocket.app.util.ServiceToken
 import io.reactivex.rxjava3.core.Completable
-import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
 import org.apache.commons.codec.binary.Base64
 import java.nio.charset.StandardCharsets
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class SocketManager @Inject constructor(
-    private val eventListener: SocketEventListener,
-    private val okHttp: OkHttpClient,
-    private val properties: ServiceDefinition,
-    private val token: ServiceToken,
-    private val throttleManager: ThrottleManager
+class SocketManager constructor(
+    tokenPath: String,
+    defPath: String,
+    throttleCapacity: Long,
+    throttleDurationMinutes: Long,
+    delegate: SocketDelegate
 ) {
+    private val serviceConfig = ServiceConfig(tokenPath, defPath)
+    private val eventListener = SocketEventListener(delegate)
+    private val okHttp = serviceConfig.okHttp()
+    private val properties = serviceConfig.serviceDef()
+    private val token = serviceConfig.serviceToken()
+    private val throttleManager = ThrottleManager(throttleCapacity, throttleDurationMinutes)
     private var socket: WebSocket? = null
     private val transformer = Gson()
 

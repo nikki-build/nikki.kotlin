@@ -27,9 +27,6 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:1.7.36")
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
 
-    implementation("com.google.dagger:dagger:2.42")
-    kapt("com.google.dagger:dagger-compiler:2.42")
-
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("commons-codec:commons-codec:1.15")
 
