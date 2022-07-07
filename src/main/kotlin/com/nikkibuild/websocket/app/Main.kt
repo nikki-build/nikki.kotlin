@@ -66,7 +66,7 @@ class App : SocketDelegate {
         val text = UUID.randomUUID().toString()
         println("Sending=> $text")
         val message = temporaryMessage(text)
-        socketManager.send(message)
+        socketManager.sendData(message)
             .subscribeOn(Schedulers.io())
             .subscribeBy(onError = {
                 println()

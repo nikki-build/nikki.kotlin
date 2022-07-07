@@ -67,7 +67,7 @@ class SocketManager constructor(
         socket = null
     }
 
-    fun send(message: Message): Completable {
+    fun sendData(message: Message): Completable {
         return Completable.create {
             try {
                 if (!throttleManager.canSend()) {
