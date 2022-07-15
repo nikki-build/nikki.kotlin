@@ -23,7 +23,7 @@ internal class SocketEventListener constructor(private val delegate: SocketDeleg
         super.onMessage(webSocket, text)
         try {
             val message = mapper.fromJson(text, Message::class.java) ?: return
-            delegate.onMessage(message)
+            delegate.onData(message.data.data)
         } catch (e: Exception) {
             println("Not data message ($text)")
         }

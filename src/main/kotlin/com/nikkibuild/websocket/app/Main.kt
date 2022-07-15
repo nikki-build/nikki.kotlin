@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.nikkibuild.websocket.app.socket.SocketDelegate
 import com.nikkibuild.websocket.app.socket.SocketManager
 import com.nikkibuild.websocket.app.util.Anything
-import com.nikkibuild.websocket.app.util.Data
 import com.nikkibuild.websocket.app.util.Message
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -79,12 +78,7 @@ class App : SocketDelegate {
 
     private fun temporaryMessage(text: String): Message {
         val message = Anything(text)
-        val d = Data("n", message, "d")
-        return Message(
-            "t", d, "d", "msg", "ok", socketManager.token.sessionId,
-            socketManager.definition.serviceId,
-            socketManager.definition.instanceId
-        )
+
     }
 
 

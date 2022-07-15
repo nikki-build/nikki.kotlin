@@ -2,6 +2,7 @@ package com.nikkibuild.websocket.app.socket
 
 import com.google.gson.Gson
 import com.nikkibuild.websocket.app.config.ServiceConfig
+import com.nikkibuild.websocket.app.util.Data
 import com.nikkibuild.websocket.app.util.Message
 import com.nikkibuild.websocket.app.util.ServiceJoinInfo
 import io.reactivex.rxjava3.core.Completable
@@ -20,8 +21,8 @@ class SocketManager constructor(
     private val serviceConfig = ServiceConfig(configPath = defPath, tokenPath = tokenPath)
     private val eventListener = SocketEventListener(delegate)
     private val okHttp = serviceConfig.okHttp()
-    val definition = serviceConfig.serviceDef()
-    val token = serviceConfig.serviceToken()
+    private val definition = serviceConfig.serviceDef()
+    private val token = serviceConfig.serviceToken()
     private val throttleManager = ThrottleManager(throttleCapacity, throttleDurationMinutes)
     private var socket: WebSocket? = null
     private val transformer = Gson()
@@ -67,12 +68,18 @@ class SocketManager constructor(
         socket = null
     }
 
-    fun sendData(message: Message): Completable {
+    fun sendData(data: Any): Completable {
         return Completable.create {
             try {
                 if (!throttleManager.canSend()) {
                     throw IllegalArgumentException("Bandwidth limit reached. Limit [5] messages in a minute")
                 }
+                val d = Data("n", data, "d")
+                val message = Message(
+                    "t", d, "d", "msg", "ok", token.sessionId,
+                    definition.serviceId,
+                    definition.instanceId
+                )
                 val json = transformer.toJson(message)
                 socket?.send(json)
                 if (it.isDisposed.not()) {
