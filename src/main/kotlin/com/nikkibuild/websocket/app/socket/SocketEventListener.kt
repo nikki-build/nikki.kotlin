@@ -35,9 +35,3 @@ internal class SocketEventListener constructor(private val delegate: SocketDeleg
     }
 
 }
-
-data class SocketEvent(val socket: WebSocket, val status: SocketStatus) {
-    enum class SocketStatus {
-        CLOSED, OPENED, ERROR
-    }
-}

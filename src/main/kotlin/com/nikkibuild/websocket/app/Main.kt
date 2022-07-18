@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.nikkibuild.websocket.app.socket.SocketDelegate
 import com.nikkibuild.websocket.app.socket.SocketManager
 import com.nikkibuild.websocket.app.util.Anything
-import com.nikkibuild.websocket.app.util.Message
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.WebSocket
@@ -76,9 +75,8 @@ class App : SocketDelegate {
             })
     }
 
-    private fun temporaryMessage(text: String): Message {
-        val message = Anything(text)
-
+    private fun temporaryMessage(text: String): Any {
+        return Anything(text)
     }
 
 
@@ -126,8 +124,8 @@ class App : SocketDelegate {
         connected = false
     }
 
-    override fun onMessage(message: Message) {
+    override fun onData(data: Any) {
         println()
-        println("New message received! ${message.name}")
+        println("New message received! $data")
     }
 }
