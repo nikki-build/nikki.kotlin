@@ -76,10 +76,17 @@ class SocketManager constructor(
                 }
                 val d = Data("n", data, "d")
                 val message = Message(
-                    "t", d, "d", "msg", "ok", token.sessionId,
+                    definition.displayName, 
+                    d, 
+                    definition.oDf.description,
+                    "msg",
+                    "ok", 
+                    "srvMsg",
+                    token.sessionId,
                     definition.serviceId,
                     definition.instanceId
                 )
+
                 val json = transformer.toJson(message)
                 socket?.send(json)
                 if (it.isDisposed.not()) {

@@ -8,6 +8,7 @@ data class Message(
     val desc: String,
     val msg: String,
     val status: String = "ok",
+    val action :String = "srvMsg",
     @SerializedName("sessionID") val session: String,
     @SerializedName("srvID") val service: String,
     @SerializedName("instID") val instance: String,
