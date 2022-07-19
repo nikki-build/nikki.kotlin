@@ -64,7 +64,7 @@ class SocketManager constructor(
     }
 
     private fun doClose() {
-        socket?.close(1000, "Closing on user request.")
+        socket?.close(1000, "Closing on user request.  ")
         socket = null
     }
 
