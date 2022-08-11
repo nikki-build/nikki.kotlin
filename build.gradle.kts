@@ -19,6 +19,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+    testImplementation("org.mockito:mockito-inline:4.6.1")
+    testImplementation("org.mockito:mockito-junit-jupiter:4.6.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
+
     val okV = "4.10.0"
     implementation("com.squareup.okhttp3:logging-interceptor:$okV")
     implementation("com.squareup.okhttp3:okhttp:$okV")
@@ -29,7 +33,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("commons-codec:commons-codec:1.15")
 
-    implementation("com.github.vladimir-bukhtoyarov:bucket4j-core:7.5.0")
+    implementation("com.github.vladimir-bukhtoyarov:bucket4j-core:7.6.0")
+
 
 }
 
@@ -47,6 +52,12 @@ application {
 java {
     withSourcesJar()
     withJavadocJar()
+}
+
+tasks {
+    test {
+        useJUnitPlatform()
+    }
 }
 
 publishing {
