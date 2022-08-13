@@ -22,6 +22,8 @@ dependencies {
     testImplementation("org.mockito:mockito-inline:4.6.1")
     testImplementation("org.mockito:mockito-junit-jupiter:4.6.1")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.10.0")
+    testImplementation("org.assertj:assertj-core:3.23.1")
 
     val okV = "4.10.0"
     implementation("com.squareup.okhttp3:logging-interceptor:$okV")
